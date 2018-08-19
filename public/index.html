@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width">
+    <title>Search the Realbook</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  </head>
+  <body>
+    <div id="song-search" class="container">
+      <center><h2>Search the realbooks</h2></center>
+      <div class="row">
+        <div class="col-md-10">
+          <input id="searchBox" class="form-control" placeholder="Enter song name">
+        </div>
+        <div class="col-md-2">
+          <button id="searchButton" class="full-width btn btn-primary">Search</button>
+        </div>
+      </div>
+      <div class="spacing">
+
+      </div>
+
+      <div id="results">
+      </div>
+
+      <footer>
+        <center>
+          <p class="text-muted">Made by Jordan Jantschulev</p>
+        </center>
+      </footer>
+
+    </div>
+
+    <div id="song-display" style="display : none">
+      <div class="page-navigation">
+        <a href="#" onclick="exitViewer()" class="nav-btn btn-danger btn" style="float:left"><i class="material-icons">clear</i></a>
+        <a id="btn-prev-page" class="nav-btn btn-primary btn" style="float:left" href="#"><i class="material-icons">keyboard_arrow_left</i></a>
+        <a id="btn-next-page" class="nav-btn btn-primary btn" style="float:right" href="#"><i class="material-icons">keyboard_arrow_right</i></a>
+        <a id="download_page" download target="_blank" href="#"  class="nav-btn btn-default btn" style="float:right"><i class="material-icons">file_download</i></a>
+        <center>
+          <h5 id="song_name">Song Name</h5>
+          <p id="song_info" class="text-muted">Info</p>
+        </center>
+      </div>
+      <div class="image-container">
+        <img id="image" src="">
+      </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+    <script src="./main.js" charset="utf-8"></script>
+
+  </body>
+</html>
