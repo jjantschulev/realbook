@@ -94,21 +94,36 @@ function openViewer(song_name, book_name, page_number) {
   document.getElementById('song_info').innerHTML = book_name + ", Page " + page_number;
   var img = document.getElementById('image');
   var pageAdr = "/" + book_name + "/" + book_name + "-" + page_number + ".jpeg";
-  img.src = pageAdr;
+  // img.src = pageAdr;
+
+  var newImage = new Image();
+  document.getElementById("loadingIcon").display = "block";
+  newImage.onload = () => {
+    img.src = pageAdr;
+    console.log("image loaded")
+    document.getElementById("loadingIcon").display = "none";
+    var ratio = img.naturalWidth / img.naturalHeight;
+    if (window.innerWidth / window.innerHeight < ratio) {
+      //Phone or Tablet
+      // alert("Phone detected")
+      img.style.width = "calc(100% - 20px)";
+      img.style.height = "calc(calc(100vw - 20px) / " + ratio + ")";
+    } else {
+      // Most likely a computer
+      img.style.width = "calc(calc(100vh - 80px) * " + ratio + ")";
+      img.style.height = "calc(100% - 20px)";
+    }
+  };
+  newImage.src = pageAdr;
+  // Preload images to the side
+  (new Image()).src = "/" + book_name + "/" + book_name + "-" + (page_number + 1) + ".jpeg";
+  (new Image()).src = "/" + book_name + "/" + book_name + "-" + (page_number - 1) + ".jpeg";
+
+
   document.getElementById('download_page').href = pageAdr;
   document.getElementById('download_page').download = song_name;
   var padding = 110;
-  var ratio = img.naturalWidth / img.naturalHeight;
-  if (window.innerWidth / window.innerHeight < ratio) {
-    //Phone or Tablet
-    // alert("Phone detected")
-    img.style.width = "calc(100% - 20px)";
-    img.style.height = "calc(calc(100vw - 20px) / " + ratio + ")";
-  } else {
-    // Most likely a computer
-    img.style.width = "calc(calc(100vh - 80px) * " + ratio + ")";
-    img.style.height = "calc(100% - 20px)";
-  }
+
   var link = document.getElementById('btn-next-page');
   link.href = "#?" + song_name + "?" + book_name + "?" + page_number;
   link.onclick = function () {
