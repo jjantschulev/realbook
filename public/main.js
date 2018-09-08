@@ -3,7 +3,10 @@ var keyWords = ["random"]
 var searchBox = document.getElementById('searchBox');
 var searchButton = document.getElementById('searchButton');
 var resultDiv = document.getElementById('results');
-var socket = io(window.location.href.substring(0, window.location.href.indexOf('/') == -1 ? window.location.href.length : window.location.href.indexOf('/')));
+urlHttpLess = window.location.href.substring(window.location.href.indexOf('/') + 2, window.location.href.length);
+var socketURL = urlHttpLess.substring(0, urlHttpLess.indexOf('/') == -1 ? urlHttpLess.length : urlHttpLess.indexOf('/'));
+var socket = io(socketURL);
+console.log("Socket connecting to: " + socketURL);
 searchButton.addEventListener("click", search)
 searchBox.addEventListener('keyup', function (e) {
   search();
