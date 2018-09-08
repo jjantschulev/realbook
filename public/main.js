@@ -97,11 +97,13 @@ function openViewer(song_name, book_name, page_number) {
   // img.src = pageAdr;
 
   var newImage = new Image();
-  document.getElementById("loadingIcon").display = "block";
+  document.getElementById("loadingIcon").style.display = "block";
+  img.style.display = "none";
   newImage.onload = () => {
     img.src = pageAdr;
     console.log("image loaded")
-    document.getElementById("loadingIcon").display = "none";
+    document.getElementById("loadingIcon").style.display = "none";
+    img.style.display = "block";
     var ratio = img.naturalWidth / img.naturalHeight;
     if (window.innerWidth / window.innerHeight < ratio) {
       //Phone or Tablet
