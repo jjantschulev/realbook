@@ -96,6 +96,7 @@ function openViewer(song_name, book_name, page_number) {
   var pageAdr = "/" + book_name + "/" + book_name + "-" + page_number + ".jpeg";
   img.src = pageAdr;
   document.getElementById('download_page').href = pageAdr;
+  document.getElementById('download_page').download = song_name;
   var padding = 110;
   var ratio = img.naturalWidth / img.naturalHeight;
   if (window.innerWidth / window.innerHeight < ratio) {
