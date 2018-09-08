@@ -3,32 +3,32 @@ var keyWords = ["random"]
 var searchBox = document.getElementById('searchBox');
 var searchButton = document.getElementById('searchButton');
 var resultDiv = document.getElementById('results');
-var socket = io("192.168.20.55:3008");
+var socket = io(window.location.href.substring(0, window.location.href.indexOf('/') == -1 ? window.location.href.length : window.location.href.indexOf('/')));
 searchButton.addEventListener("click", search)
 searchBox.addEventListener('keyup', function (e) {
-    search();
+  search();
 });
 search();
 
-if(window.location.href.indexOf("#") != -1) {
+if (window.location.href.indexOf("#") != -1) {
   var url = window.location.href;
   var indexes = [];
-  for(var i = 0; i < url.length; i ++) {
-    if(url.charAt(i) == "?"){
+  for (var i = 0; i < url.length; i++) {
+    if (url.charAt(i) == "?") {
       indexes.push(i);
     }
   }
-  if(indexes.length == 3) {
-    var song_name = url.slice(indexes[0]+1, indexes[1]);
-    var book_name = url.slice(indexes[1]+1, indexes[2]);
-    var page_number = parseInt(url.slice(indexes[2]+1, url.length));
+  if (indexes.length == 3) {
+    var song_name = url.slice(indexes[0] + 1, indexes[1]);
+    var book_name = url.slice(indexes[1] + 1, indexes[2]);
+    var page_number = parseInt(url.slice(indexes[2] + 1, url.length));
     loadSong(song_name, book_name, page_number);
   }
 }
 
 
 function search() {
-  if(keyWords.indexOf(searchBox.value.toLowerCase()) != -1) {
+  if (keyWords.indexOf(searchBox.value.toLowerCase()) != -1) {
     searchBox.classList.add("special-search-text");
   } else {
     searchBox.classList.remove("special-search-text");
@@ -37,7 +37,7 @@ function search() {
 }
 socket.on("results", function (results) {
   clearResults();
-  for(var result of results) {
+  for (var result of results) {
     createResult(result.song_name, result.book_name, result.page_number);
   }
 });
@@ -84,18 +84,18 @@ socket.on("songName", function (song_name, book_name, page_number) {
   openViewer(song_name, book_name, page_number);
 })
 
-function openViewer (song_name, book_name, page_number) {
+function openViewer(song_name, book_name, page_number) {
   document.getElementById('song-display').style.display = "block";
   document.getElementById('song-search').style.display = "none";
   document.getElementById('song_name').innerHTML = song_name;
   document.getElementById('song_info').innerHTML = book_name + ", Page " + page_number;
   var img = document.getElementById('image');
-  var pageAdr =  "/" + book_name + "/" + book_name + "-" + page_number + ".jpeg";
+  var pageAdr = "/" + book_name + "/" + book_name + "-" + page_number + ".jpeg";
   img.src = pageAdr;
   document.getElementById('download_page').href = pageAdr;
   var padding = 110;
   var ratio = img.naturalWidth / img.naturalHeight;
-  if(window.innerWidth / window.innerHeight < ratio) {
+  if (window.innerWidth / window.innerHeight < ratio) {
     //Phone or Tablet
     // alert("Phone detected")
     img.style.width = "calc(100% - 20px)";
@@ -108,19 +108,19 @@ function openViewer (song_name, book_name, page_number) {
   var link = document.getElementById('btn-next-page');
   link.href = "#?" + song_name + "?" + book_name + "?" + page_number;
   link.onclick = function () {
-    loadSong(song_name, book_name, page_number+1);
+    loadSong(song_name, book_name, page_number + 1);
   }
   link = document.getElementById('btn-prev-page');
   link.href = "#?" + song_name + "?" + book_name + "?" + page_number;
   link.onclick = function () {
-    if(page_number > 1) {
-      loadSong(song_name, book_name, page_number-1);
+    if (page_number > 1) {
+      loadSong(song_name, book_name, page_number - 1);
     }
   }
 }
 
 
-function exitViewer () {
+function exitViewer() {
   document.getElementById('song-display').style.display = "none";
   document.getElementById('song-search').style.display = "block";
 }
